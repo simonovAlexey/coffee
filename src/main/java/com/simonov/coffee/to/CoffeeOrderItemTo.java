@@ -2,16 +2,27 @@ package com.simonov.coffee.to;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-@EqualsAndHashCode(callSuper = true)
 @Data
+@NoArgsConstructor
+@EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
 public class CoffeeOrderItemTo extends BaseTo{
-    @Size(min = 3,max = 50)
+
+    @Size(min = 3,max = 200)
     private  String typeName;
+
+    @Min(value=1)
     private  int quantity;
+    @NotNull
     private  Double price;
+    @NotNull
     private Double total;
 
     public CoffeeOrderItemTo(int id, String typeName, int quantity, Double price) {
@@ -31,19 +42,5 @@ public class CoffeeOrderItemTo extends BaseTo{
         this(typeName,quantity,price,total);
         this.id=id;
 
-    }
-
-    public CoffeeOrderItemTo() {
-    }
-
-    @Override
-    public String toString() {
-        return "CoffeeOrderItemTo{" +
-                "typeName='" + typeName + '\'' +
-                ", quantity=" + quantity +
-                ", price=" + price +
-                ", total=" + total +
-                ", id=" + id +
-                '}';
     }
 }

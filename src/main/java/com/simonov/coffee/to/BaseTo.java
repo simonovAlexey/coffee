@@ -1,21 +1,12 @@
 package com.simonov.coffee.to;
 
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
+@Data
+@EqualsAndHashCode
+@NoArgsConstructor
 public class BaseTo {
     protected int id;
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public BaseTo(int id) {
-        this.id = id;
-    }
-
-    public BaseTo() {
-    }
 }

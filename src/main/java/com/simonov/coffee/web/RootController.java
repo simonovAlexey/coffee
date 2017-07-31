@@ -41,7 +41,7 @@ public class RootController {
 
     @GetMapping("/coffeelist")
     public String indexPage(ModelMap model) {
-        return getCoffeListPage(model, false,false);
+        return getCoffeListPage(model, false, false);
     }
 
     @GetMapping(value = "coffeelist/{name}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
@@ -63,7 +63,7 @@ public class RootController {
 //            , BindingResult result
             , ModelMap model
     ) {
-        if (idL==null || idL.isEmpty()) return "redirect:coffeelist";// try to change locale on order
+        if (idL == null || idL.isEmpty()) return "redirect:coffeelist";// try to change locale on order
         HashMap<Integer, Integer> chekedCT = new HashMap<>();
         System.out.println("");
 
@@ -75,11 +75,11 @@ public class RootController {
                 try {
                     quantity = Integer.parseInt(s);
                 } catch (NumberFormatException e) {
-                    return getCoffeListPage(model, true,false);
+                    return getCoffeListPage(model, true, false);
 
 //                result.rejectValue("quantity", "exception.wrongQuantity");
                 }
-                if (quantity <= 0) return getCoffeListPage(model, true,false);
+                if (quantity <= 0) return getCoffeListPage(model, true, false);
                 chekedCT.put(key, quantity);
             }
 
@@ -89,26 +89,31 @@ public class RootController {
         List<CoffeeOrderItemTo> coffeeOrderItemList = service.getByCoffeeTypeIdAndQuantity(chekedCT);
         Order order = service.prepareOrder(coffeeOrderItemList);
 
-        model.addAttribute("order",order);
+        model.addAttribute("order", order);
 
         System.out.println("");
         return "orderlist";
     }
 
     @RequestMapping("/order")
-    public String confirmOrder(@Valid Order order, @Valid List<CoffeeOrderItemTo> list, BindingResult result, SessionStatus status, ModelMap map){
-        //TODO send Order to DB
+    public String confirmOrder(
+//                               @RequestParam(name = "order.items", required = false) CoffeeOrderItemTo[] itemsP,
+            @Valid Order order, BindingResult result, SessionStatus status, ModelMap map) {
         System.out.println();
-        return getCoffeListPage(map,false,true);
+        if (!result.hasErrors()) {
+            //TODO send Order to DB
+            status.setComplete();
+            return getCoffeListPage(map, false, true);
+        }
+        return "orderlist";
     }
 
 
     @NotNull
     private String getCoffeListPage(ModelMap model, Boolean error, Boolean confirmOrder) {
         model.addAttribute("now", (LocalDate.now() + " " + LocalTime.now()));
-        model.addAttribute("user", "SIMONOV");
         model.addAttribute("coffeetypelist", service.getAllEnabledCoffeType());
-        if (confirmOrder) model.addAttribute("orderConfirmed",true);
+        if (confirmOrder) model.addAttribute("orderConfirmed", true);
         if (error) {
             model.addAttribute("errorValue", "exception.wrongQuantity");
         }

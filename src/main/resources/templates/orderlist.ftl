@@ -20,12 +20,14 @@
                     </tr>
                     <tr>
                         <td class="active"><label for="name"><b><@spring.message "order.name"/></b></label></td>
-                        <td><input name="name" id="name" maxlength="100" size="40" required></td>
+                        <td><@spring.formInput  "order.name" "maxlength='200' size='35' required"/></td>
+                        <td><@spring.showErrors "<br>" "bg-danger"/></td>
                     </tr>
 
                     <tr>
                         <td class="active"><label for="adres"><b><@spring.message "order.adres"/></b></label></td>
-                        <td><input name="deliveryAdress" id="adres" maxlength="200" size="40" required></td>
+                        <td><@spring.formInput  "order.deliveryAdress" "maxlength='200' size='35' required"/></td>
+                        <td><@spring.showErrors "<br>" "bg-danger"/></td>
                     </tr>
                     <tr>
                         <td colspan="2"><input type="submit"
@@ -47,36 +49,38 @@
                     </tr>
                 <#list order.items as type>
                     <tr>
-                        <td><input type="hidden" name="id" value="${type.id}"></td>
-                        <td><input type="hidden" name="typeName" value="${type.typeName}">${type.typeName}</td>
-                        <td><input type="hidden" name="price" value="${type.price}">${type.price}</td>
-                        <td><input type="hidden" name="quantity" value="${type.quantity}">${type.quantity}</td>
-                        <td><input type="hidden" name="total" value="${type.total}">${type.total} TGR</td>
-                        <#--<td>${type.typeName}</td>
-                        <td>${type.price}</td>
-                        <td>${type.quantity}</td>
-                        <td>${type.total} TGR</td-->>
+                        <td><input type="hidden" name="items[${type_index}].id" value="${type.id}"></td>
+                        <td><input type="hidden" name="items[${type_index}].typeName" value="${type.typeName}">${type.typeName}</td>
+                        <td><input type="hidden" name="items[${type_index}].price" value="${type.price}">${type.price}</td>
+                        <td><input type="hidden" name="items[${type_index}].quantity" value="${type.quantity}">${type.quantity}</td>
+                        <td><input type="hidden" name="items[${type_index}].total" value="${type.total}">${type.total} TGR</td>
                     </tr>
                 </#list>
-
                     <tr>
-                        <td style="text-align: right;" colspan="3"><b>Сумма</b></td>
-                        <td>${order.subtotal} TGR</td>
+                        <td style="text-align: right;" colspan="3"><@spring.message "order.subtotal"/></td>
+                        <td><input type="hidden" name="subtotal" value="${order.subtotal}">${order.subtotal} TGR</td>
                     </tr>
                     <tr>
-                        <td style="text-align: right;" colspan="3"><b>Доставка</b></td>
-                        <td>${order.delivery} TGR</td>
+                        <td style="text-align: right;" colspan="3"><@spring.message "order.delivery"/></td>
+                        <td><input type="hidden" name="delivery" value="${order.delivery}">${order.delivery} TGR</td>
                     </tr>
                     <tr>
-                        <td style="text-align: right;" colspan="3"><b>Всего</b></td>
-                        <td>${order.total} TGR</td>
+                        <td style="text-align: right;" colspan="3"><b><@spring.message "coffeelist.total"/></b></td>
+                        <td><input type="hidden" name="total" value="${order.total}">${order.total} TGR</td>
                     </tr>
-
-
                 </table>
             </div>
         </div>
     </form>
-
+<#if spring.status.error>
+    <div class="alert alert-danger">
+        There were problems with the data you entered:
+        <ul>
+            <#list spring.status.errorMessages as error>
+                <li>${error}</li>
+            </#list>
+        </ul>
+    </div>
+</#if>
 </div>
 </body>
