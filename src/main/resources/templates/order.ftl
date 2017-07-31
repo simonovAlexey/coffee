@@ -14,14 +14,14 @@
     <div class="modal-dialog modal-sm">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title"><@spring.message "order.confirmTitle"/></h4>
+                <h4 class="modal-title"><@spring.message "orderTO.confirmTitle"/></h4>
             </div>
             <div class="modal-body">
-                <p><@spring.message "order.confirmBody"/></p>
+                <p><@spring.message "orderTO.confirmBody"/></p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default btn-block"
-                        data-dismiss="modal"><@spring.message "order.backBTN"/></button>
+                        data-dismiss="modal"><@spring.message "orderTO.backBTN"/></button>
             </div>
         </div>
     </div>

@@ -8,5 +8,5 @@ import lombok.NoArgsConstructor;
 @EqualsAndHashCode
 @NoArgsConstructor
 public class BaseTo {
-    protected int id;
+    protected Integer id;
 }

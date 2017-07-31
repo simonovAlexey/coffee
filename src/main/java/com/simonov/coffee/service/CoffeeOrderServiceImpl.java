@@ -7,12 +7,15 @@ import com.simonov.coffee.repository.CoffeeOrderItemRepository;
 import com.simonov.coffee.repository.CoffeeOrderRepository;
 import com.simonov.coffee.repository.CoffeeTypeRepository;
 import com.simonov.coffee.to.CoffeeOrderItemTo;
-import com.simonov.coffee.to.Order;
+import com.simonov.coffee.to.OrderTO;
 import com.simonov.coffee.utill.BusinessRules;
 import com.simonov.coffee.utill.ValidationUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -21,47 +24,55 @@ import java.util.stream.Collectors;
 @Service
 public class CoffeeOrderServiceImpl implements CoffeeOrderService {
 
-    private CoffeeOrderRepository coffeeOrderRepository;
+    private CoffeeOrderRepository orderRepository;
     private BusinessRules businessRules;
-    private CoffeeTypeRepository coffeeTypeRepository;
-    private CoffeeOrderItemRepository coffeeOrderItemRepository;
+    private CoffeeTypeRepository typeRepository;
+    private CoffeeOrderItemRepository orderItemRepository;
 
     @Autowired
-    public CoffeeOrderServiceImpl(CoffeeOrderRepository coffeeOrderRepository,
+    public CoffeeOrderServiceImpl(CoffeeOrderRepository orderRepository,
                                   BusinessRules businessRules,
-                                  CoffeeTypeRepository coffeeTypeRepository,
-                                  CoffeeOrderItemRepository coffeeOrderItemRepository) {
-        this.coffeeOrderRepository = coffeeOrderRepository;
+                                  CoffeeTypeRepository typeRepository,
+                                  CoffeeOrderItemRepository orderItemRepository) {
+        this.orderRepository = orderRepository;
         this.businessRules = businessRules;
-        this.coffeeTypeRepository = coffeeTypeRepository;
-        this.coffeeOrderItemRepository = coffeeOrderItemRepository;
+        this.typeRepository = typeRepository;
+        this.orderItemRepository = orderItemRepository;
     }
 
     @Override
     public List<CoffeeType> getAllEnabledCoffeType() {
-        return Collections.unmodifiableList(coffeeTypeRepository.getAllEnabled());
+        return Collections.unmodifiableList(typeRepository.getAllEnabled());
     }
 
     @Override
-    public Order create(CoffeeOrder coffeeOrder, List<CoffeeOrderItemTo> coffeeTypeList) {
+    public OrderTO create(CoffeeOrder coffeeOrder, List<CoffeeOrderItemTo> coffeeTypeList) {
 
         return null;
     }
 
     @Override
-    public Order save(Order order) {
-        return null;
+    @Transactional
+    public List<CoffeeOrderItem> save(OrderTO orderTO) {
+        CoffeeOrder coffeeOrder = new CoffeeOrder(LocalDateTime.now(), orderTO.getName(), orderTO.getDeliveryAdress(), orderTO.getTotal());
+        CoffeeOrder savedOrder = orderRepository.save(coffeeOrder);
+        List<CoffeeOrderItem> result = new ArrayList<>();
+        for (CoffeeOrderItemTo item : orderTO.getItems()) {
+            CoffeeOrderItem coffeeOrderItem = new CoffeeOrderItem(savedOrder, item.getQuantity());
+            result.add(orderItemRepository.save(coffeeOrderItem, item.getId()));
+        }
+        return result;
     }
 
     @Override
     public CoffeeOrder getOne(int id) {
-        return ValidationUtil.checkNotFoundWithId(coffeeOrderRepository.getOneById(id), id);
+        return ValidationUtil.checkNotFoundWithId(orderRepository.findById(id), id);
     }
 
 
     @Override
     public List<CoffeeOrderItemTo> getByOrderId(int id) {
-        List<CoffeeOrderItem> allByTypeId = coffeeOrderItemRepository.findAllByCoffeeOrderId(id);
+        List<CoffeeOrderItem> allByTypeId = orderItemRepository.findAllByCoffeeOrderId(id);
         List<CoffeeOrderItemTo> collect = allByTypeId.stream().
                 map(x -> new CoffeeOrderItemTo(x.getCoffeeType().getTypeName(), x.getQuantity(), x.getCoffeeType().getPrice(),
                         businessRules.calculateSubTotalCost(x.getQuantity(), x.getCoffeeType().getPrice())))
@@ -72,7 +83,7 @@ public class CoffeeOrderServiceImpl implements CoffeeOrderService {
     @Override
     public List<CoffeeOrderItemTo> getByCoffeeTypeIdAndQuantity(Map<Integer, Integer> ctm) {
         List<CoffeeOrderItemTo> resultList =
-                coffeeTypeRepository.getAllByIds(ctm.keySet()).stream()
+                typeRepository.getAllByIds(ctm.keySet()).stream()
                         .map(ct -> new CoffeeOrderItemTo(ct.getId(),
                                 ct.getTypeName(),
                                 ctm.get(ct.getId()),
@@ -81,10 +92,11 @@ public class CoffeeOrderServiceImpl implements CoffeeOrderService {
         resultList.forEach(entry -> entry.setTotal(businessRules.calculateSubTotalCost(entry)));
         return Collections.unmodifiableList(resultList);
     }
+
     @Override
-    public Order prepareOrder(List<CoffeeOrderItemTo> items) {
+    public OrderTO prepareOrder(List<CoffeeOrderItemTo> items) {
         double subtotal = businessRules.calculateOrderSubTotal(items);
         double delivery = businessRules.calculateDelivery(subtotal);
-        return new Order(items, subtotal, delivery, subtotal + delivery);
+        return new OrderTO(items, subtotal, delivery, subtotal + delivery);
     }
 }

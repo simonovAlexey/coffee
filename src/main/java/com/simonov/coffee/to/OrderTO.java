@@ -15,7 +15,7 @@ import java.util.List;
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
-public class Order extends BaseTo{
+public class OrderTO extends BaseTo{
 
     @Valid
     @NotNull
@@ -38,7 +38,7 @@ public class Order extends BaseTo{
     @Length(min = 10, max=200)
     private String deliveryAdress;
 
-    public Order(List<CoffeeOrderItemTo> items, double subtotal, double delivery, double total) {
+    public OrderTO(List<CoffeeOrderItemTo> items, double subtotal, double delivery, double total) {
         this.items = items;
         this.subtotal = subtotal;
         this.delivery = delivery;

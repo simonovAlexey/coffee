@@ -16,6 +16,9 @@
 package com.simonov.coffee.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -24,35 +27,20 @@ import javax.persistence.MappedSuperclass;
 
 
 @MappedSuperclass
+@Data
+@NoArgsConstructor
+@EqualsAndHashCode
 public class BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected Integer id;
 
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
     @JsonIgnore
     public boolean isNew() {
         return this.id == null;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof BaseEntity)) return false;
-
-        BaseEntity that = (BaseEntity) o;
-
-        return getId().equals(that.getId());
-    }
-
-    @Override
-    public int hashCode() {
-        return getId().hashCode();
+    public BaseEntity(Integer id) {
+        this.id=id;
     }
 }

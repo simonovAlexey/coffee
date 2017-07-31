@@ -15,7 +15,7 @@ import java.util.List;
 @SpringBootTest
 @RunWith(SpringJUnit4ClassRunner.class)
 @ActiveProfiles("spring-data-jpa, mysql")
-public class CoffeeOrderServiceTest extends AbstractCoffeeOrderServiceTest {
+public class CoffeeOrderTOServiceTest extends AbstractCoffeeOrderServiceTest {
 
     @Test
     public void getAllEnabledCoffeTypeTest() throws Exception {

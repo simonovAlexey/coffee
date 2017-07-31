@@ -1,6 +1,9 @@
 package com.simonov.coffee.model;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.*;
 import javax.validation.constraints.Digits;
@@ -9,6 +12,9 @@ import javax.validation.constraints.NotNull;
 @Entity
 @Table(name = "coffeeorderitem")
 @Data
+@NoArgsConstructor
+@EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
 public class CoffeeOrderItem extends BaseEntity {
 
 
@@ -26,23 +32,8 @@ public class CoffeeOrderItem extends BaseEntity {
     @Digits(fraction = 0, integer = 5)
     private Integer quantity;
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof CoffeeOrderItem)) return false;
-        if (!super.equals(o)) return false;
-
-        CoffeeOrderItem that = (CoffeeOrderItem) o;
-
-        if (!getCoffeeOrder().equals(that.getCoffeeOrder())) return false;
-        return getQuantity().equals(that.getQuantity());
-    }
-
-    @Override
-    public int hashCode() {
-        int result = super.hashCode();
-        result = 31 * result + getCoffeeOrder().hashCode();
-        result = 31 * result + getQuantity().hashCode();
-        return result;
+    public CoffeeOrderItem(CoffeeOrder coffeeOrder, Integer quantity) {
+        this.coffeeOrder = coffeeOrder;
+        this.quantity = quantity;
     }
 }

@@ -1,8 +1,10 @@
 package com.simonov.coffee.model;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 import org.hibernate.validator.constraints.NotBlank;
-import org.hibernate.validator.constraints.SafeHtml;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,11 +15,13 @@ import javax.validation.constraints.NotNull;
 @Entity
 @Table(name = "coffeetype")
 @Data
+@NoArgsConstructor
+@EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
 public class CoffeeType extends BaseEntity {
 
     @Column(name = "type_name")
     @NotBlank
-    @SafeHtml
     private String typeName;
 
     @Column(name = "price")

@@ -9,7 +9,7 @@
 -- Сорт кофе
 --
 create table CoffeeType (
-  id int not null, -- pk
+  id int not null AUTO_INCREMENT, -- pk
   type_name varchar(200) not null, -- название
   price double not null, -- цена
   disabled char(1), -- если disabled = 'Y', то не показывать данный сорт в списке доступных сортов
@@ -24,7 +24,7 @@ create index CT_I on CoffeeType (
 -- Заказ
 --
 create table CoffeeOrder (
-  id int not null, -- pk
+  id int not null AUTO_INCREMENT, -- pk
   order_date datetime not null, -- время заказа
   name varchar(100), -- имя заказчика
   delivery_address varchar(200) not null, -- куда доставлять
@@ -40,7 +40,7 @@ create index CO_I1 on CoffeeOrder (
 -- Одна позиция заказа
 --
 create table CoffeeOrderItem (
-  id int not null, -- pk
+  id int not null AUTO_INCREMENT, -- pk
   type_id int not null, -- сорт кофе
   order_id int not null, -- к какому заказу принадлежит
   quantity int, -- сколько чашек

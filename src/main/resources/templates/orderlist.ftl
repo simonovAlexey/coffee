@@ -16,29 +16,29 @@
             <div class="col-sm-8 col-md-5">
                 <table class="table table-condensed">
                     <tr class="active">
-                        <p><@spring.message "order.delivery"/></p>
+                        <p><@spring.message "orderTO.delivery"/></p>
                     </tr>
                     <tr>
-                        <td class="active"><label for="name"><b><@spring.message "order.name"/></b></label></td>
-                        <td><@spring.formInput  "order.name" "maxlength='200' size='35' required"/></td>
+                        <td class="active"><label for="name"><b><@spring.message "orderTO.name"/></b></label></td>
+                        <td><@spring.formInput  "orderTO.name" "maxlength='200' size='35' required"/></td>
                         <td><@spring.showErrors "<br>" "bg-danger"/></td>
                     </tr>
 
                     <tr>
-                        <td class="active"><label for="adres"><b><@spring.message "order.adres"/></b></label></td>
-                        <td><@spring.formInput  "order.deliveryAdress" "maxlength='200' size='35' required"/></td>
+                        <td class="active"><label for="adres"><b><@spring.message "orderTO.adres"/></b></label></td>
+                        <td><@spring.formInput  "orderTO.deliveryAdress" "maxlength='200' size='35' required"/></td>
                         <td><@spring.showErrors "<br>" "bg-danger"/></td>
                     </tr>
                     <tr>
                         <td colspan="2"><input type="submit"
-                                               value="<@spring.message "order.confirmBTN"/>"</td>
+                                               value="<@spring.message "orderTO.confirmBTN"/>"</td>
                     </tr>
                 </table>
             </div>
 
 
             <div class="col-sm-6 col-md-6">
-                <p><@spring.message "order.confirm"/></p>
+                <p><@spring.message "orderTO.confirm"/></p>
                 <table class="table table-striped table-condensed" style="float: left;">
                     <tr>
                         <th></th>
@@ -47,7 +47,7 @@
                         <th><@spring.message code="coffeelist.quantity"/></th>
                         <th><@spring.message code="coffeelist.total"/></th>
                     </tr>
-                <#list order.items as type>
+                <#list orderTO.items as type>
                     <tr>
                         <td><input type="hidden" name="items[${type_index}].id" value="${type.id}"></td>
                         <td><input type="hidden" name="items[${type_index}].typeName" value="${type.typeName}">${type.typeName}</td>
@@ -57,16 +57,16 @@
                     </tr>
                 </#list>
                     <tr>
-                        <td style="text-align: right;" colspan="3"><@spring.message "order.subtotal"/></td>
-                        <td><input type="hidden" name="subtotal" value="${order.subtotal}">${order.subtotal} TGR</td>
+                        <td style="text-align: right;" colspan="3"><@spring.message "orderTO.subtotal"/></td>
+                        <td><input type="hidden" name="subtotal" value="${orderTO.subtotal}">${orderTO.subtotal} TGR</td>
                     </tr>
                     <tr>
-                        <td style="text-align: right;" colspan="3"><@spring.message "order.delivery"/></td>
-                        <td><input type="hidden" name="delivery" value="${order.delivery}">${order.delivery} TGR</td>
+                        <td style="text-align: right;" colspan="3"><@spring.message "orderTO.delivery"/></td>
+                        <td><input type="hidden" name="delivery" value="${orderTO.delivery}">${orderTO.delivery} TGR</td>
                     </tr>
                     <tr>
                         <td style="text-align: right;" colspan="3"><b><@spring.message "coffeelist.total"/></b></td>
-                        <td><input type="hidden" name="total" value="${order.total}">${order.total} TGR</td>
+                        <td><input type="hidden" name="total" value="${orderTO.total}">${orderTO.total} TGR</td>
                     </tr>
                 </table>
             </div>

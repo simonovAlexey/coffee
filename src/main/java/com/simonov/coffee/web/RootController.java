@@ -3,7 +3,7 @@ package com.simonov.coffee.web;
 import com.simonov.coffee.model.Greeting;
 import com.simonov.coffee.service.CoffeeOrderService;
 import com.simonov.coffee.to.CoffeeOrderItemTo;
-import com.simonov.coffee.to.Order;
+import com.simonov.coffee.to.OrderTO;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -63,7 +63,7 @@ public class RootController {
 //            , BindingResult result
             , ModelMap model
     ) {
-        if (idL == null || idL.isEmpty()) return "redirect:coffeelist";// try to change locale on order
+        if (idL == null || idL.isEmpty()) return "redirect:coffeelist";// try to change locale on orderTO
         HashMap<Integer, Integer> chekedCT = new HashMap<>();
         System.out.println("");
 
@@ -87,9 +87,9 @@ public class RootController {
         if (chekedCT.isEmpty()) return "redirect:coffeelist";
 
         List<CoffeeOrderItemTo> coffeeOrderItemList = service.getByCoffeeTypeIdAndQuantity(chekedCT);
-        Order order = service.prepareOrder(coffeeOrderItemList);
+        OrderTO orderTO = service.prepareOrder(coffeeOrderItemList);
 
-        model.addAttribute("order", order);
+        model.addAttribute("orderTO", orderTO);
 
         System.out.println("");
         return "orderlist";
@@ -97,11 +97,11 @@ public class RootController {
 
     @RequestMapping("/order")
     public String confirmOrder(
-//                               @RequestParam(name = "order.items", required = false) CoffeeOrderItemTo[] itemsP,
-            @Valid Order order, BindingResult result, SessionStatus status, ModelMap map) {
+//                               @RequestParam(name = "orderTO.items", required = false) CoffeeOrderItemTo[] itemsP,
+            @Valid OrderTO orderTO, BindingResult result, SessionStatus status, ModelMap map) {
         System.out.println();
         if (!result.hasErrors()) {
-            //TODO send Order to DB
+            service.save(orderTO);
             status.setComplete();
             return getCoffeListPage(map, false, true);
         }
