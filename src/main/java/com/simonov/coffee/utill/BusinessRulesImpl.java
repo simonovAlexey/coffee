@@ -102,7 +102,5 @@ public class BusinessRulesImpl implements BusinessRules {
     public double calculateDelivery(@NonNull double subtotal) {
         return subtotal > freeDelivery ? 0 : deliveryCost;
     }
-
-
 }
 

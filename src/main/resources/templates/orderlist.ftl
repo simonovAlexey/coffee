@@ -74,7 +74,7 @@
     </form>
 <#if spring.status.error>
     <div class="alert alert-danger">
-        There were problems with the data you entered:
+        <@spring.message "exception.validationList"/>
         <ul>
             <#list spring.status.errorMessages as error>
                 <li>${error}</li>

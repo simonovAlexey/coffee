@@ -10,6 +10,8 @@ import com.simonov.coffee.to.CoffeeOrderItemTo;
 import com.simonov.coffee.to.OrderTO;
 import com.simonov.coffee.utill.BusinessRules;
 import com.simonov.coffee.utill.ValidationUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,6 +25,7 @@ import java.util.stream.Collectors;
 
 @Service
 public class CoffeeOrderServiceImpl implements CoffeeOrderService {
+    private static final Logger LOG = LoggerFactory.getLogger(CoffeeOrderServiceImpl.class);
 
     private CoffeeOrderRepository orderRepository;
     private BusinessRules businessRules;
@@ -61,6 +64,7 @@ public class CoffeeOrderServiceImpl implements CoffeeOrderService {
             CoffeeOrderItem coffeeOrderItem = new CoffeeOrderItem(savedOrder, item.getQuantity());
             result.add(orderItemRepository.save(coffeeOrderItem, item.getId()));
         }
+        LOG.debug("Order saved: ",result);
         return result;
     }
 

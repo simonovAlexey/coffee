@@ -96,10 +96,7 @@ public class RootController {
     }
 
     @RequestMapping("/order")
-    public String confirmOrder(
-//                               @RequestParam(name = "orderTO.items", required = false) CoffeeOrderItemTo[] itemsP,
-            @Valid OrderTO orderTO, BindingResult result, SessionStatus status, ModelMap map) {
-        System.out.println();
+    public String confirmOrder(@Valid OrderTO orderTO, BindingResult result, SessionStatus status, ModelMap map) {
         if (!result.hasErrors()) {
             service.save(orderTO);
             status.setComplete();
