@@ -26,22 +26,26 @@ public class BusinessRulesImpl implements BusinessRules {
 
     private CostConfigurationRepository costConfigurationRepository;
 
-/*    @Value("${br.freeDelivery}")
-    public int freeDeliveryProp;
-
-    @Value("${br.deliveryCost}")
-    private int deliveryCostProp;
-
-    @Value("${br.eachNCupFree}")
-    private int eachNCupFreeProp;
-    TODO Autowired properties in constructor*/
-
     @Autowired
     public BusinessRulesImpl(CostConfigurationRepository costConfigurationRepository,
-                             @Value("${some.prop}")String sp) {
+                             @Value("${br.freeDelivery:-1}") Integer freeDeliveryP,
+                             @Value("${br.deliveryCost:-1}") Integer deliveryCostP,
+                             @Value("${br.eachNCupFree:-1}") Integer eachNCupFreeP
+    ) {
         this.costConfigurationRepository = costConfigurationRepository;
-//        this.deliveryCostProp=sp;
-        init(costConfigurationRepository);
+        if (freeDeliveryP == -1 || deliveryCostP == -1 || eachNCupFreeP == -1) {
+            LOG.info("Configure with DB");
+            init(costConfigurationRepository);
+        } else {
+            LOG.info("Configure with properties");
+            this.eachNCupFree = eachNCupFreeP;
+            this.deliveryCost = deliveryCostP;
+            this.freeDelivery = freeDeliveryP;
+        }
+    }
+
+    public BusinessRulesImpl() {
+        LOG.debug("Configure with default no args constructor");
     }
 
     private void init(CostConfigurationRepository costConfigurationRepository) throws NotFoundException {
@@ -74,14 +78,14 @@ public class BusinessRulesImpl implements BusinessRules {
         }*/
 
 
-
     @Override
     public double calculateSubTotalCost(@NonNull CoffeeOrderItemTo item) {
         return calculateSubTotalCost(item.getQuantity(), item.getPrice());
 
     }
+
     @Override
-    public double calculateSubTotalCost(@NonNull Integer quantity, double price){
+    public double calculateSubTotalCost(@NonNull Integer quantity, double price) {
         return (quantity - (quantity / eachNCupFree)) * price;
     }
 
@@ -98,7 +102,6 @@ public class BusinessRulesImpl implements BusinessRules {
     public double calculateDelivery(@NonNull double subtotal) {
         return subtotal > freeDelivery ? 0 : deliveryCost;
     }
-
 
 
 }
