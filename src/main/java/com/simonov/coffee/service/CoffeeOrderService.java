@@ -13,8 +13,6 @@ public interface CoffeeOrderService {
 
     List<CoffeeType> getAllEnabledCoffeType();
 
-    OrderTO create(CoffeeOrder coffeeOrder, List<CoffeeOrderItemTo> coffeeTypeList);
-
     List<CoffeeOrderItem> save(OrderTO orderTO);
 
     CoffeeOrder getOne(int id);
@@ -24,5 +22,7 @@ public interface CoffeeOrderService {
     List<CoffeeOrderItemTo> getByCoffeeTypeIdAndQuantity(Map<Integer,Integer> ctm);
 
     OrderTO prepareOrder(List<CoffeeOrderItemTo> items);
+
+    Integer getNFreeCup();
 
 }

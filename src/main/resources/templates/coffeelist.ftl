@@ -8,7 +8,6 @@
 <div class="container-fluid">
     <div class="page-header">
         <h1><@spring.message "coffeelist.title"/></h1>
-        <p>Now is ${now}:
     </div>
     <br>
     <h3>
@@ -53,10 +52,9 @@
                                                value="<@spring.message "orderTO.confirmBTN"/>"</td>
                     </tr>
 
-                <#--<tr>
-                    <td colspan=4>* - <spring:message code="label.each" />
-                    ${nCupFree} <spring:message code="label.cupFree" /></td>
-                </tr>-->
+                <tr>
+                    <td colspan=4>* - <@spring.message "coffeelist.each" /> ${nCupFree} <@spring.message "coffeelist.freeCup"/></td>
+                </tr>
 
                 </table>
             </form>

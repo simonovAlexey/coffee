@@ -14,8 +14,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
 
 import javax.validation.Valid;
-import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -76,8 +74,6 @@ public class RootController {
                     quantity = Integer.parseInt(s);
                 } catch (NumberFormatException e) {
                     return getCoffeListPage(model, true, false);
-
-//                result.rejectValue("quantity", "exception.wrongQuantity");
                 }
                 if (quantity <= 0) return getCoffeListPage(model, true, false);
                 chekedCT.put(key, quantity);
@@ -108,7 +104,6 @@ public class RootController {
 
     @NotNull
     private String getCoffeListPage(ModelMap model, Boolean error, Boolean confirmOrder) {
-        model.addAttribute("now", (LocalDate.now() + " " + LocalTime.now()));
         model.addAttribute("coffeetypelist", service.getAllEnabledCoffeType());
         if (confirmOrder) model.addAttribute("orderConfirmed", true);
         if (error) {

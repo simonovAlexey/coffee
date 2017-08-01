@@ -99,7 +99,7 @@ public class BusinessRulesImpl implements BusinessRules {
     }
 
     @Override
-    public double calculateDelivery(@NonNull double subtotal) {
+    public double calculateDelivery(double subtotal) {
         return subtotal > freeDelivery ? 0 : deliveryCost;
     }
 }

@@ -49,12 +49,6 @@ public class CoffeeOrderServiceImpl implements CoffeeOrderService {
     }
 
     @Override
-    public OrderTO create(CoffeeOrder coffeeOrder, List<CoffeeOrderItemTo> coffeeTypeList) {
-
-        return null;
-    }
-
-    @Override
     @Transactional
     public List<CoffeeOrderItem> save(OrderTO orderTO) {
         CoffeeOrder coffeeOrder = new CoffeeOrder(LocalDateTime.now(), orderTO.getName(), orderTO.getDeliveryAdress(), orderTO.getTotal());
@@ -102,5 +96,10 @@ public class CoffeeOrderServiceImpl implements CoffeeOrderService {
         double subtotal = businessRules.calculateOrderSubTotal(items);
         double delivery = businessRules.calculateDelivery(subtotal);
         return new OrderTO(items, subtotal, delivery, subtotal + delivery);
+    }
+
+    @Override
+    public Integer getNFreeCup() {
+        return null;
     }
 }
