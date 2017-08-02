@@ -15,10 +15,12 @@
     </h3>
 
 <#if errorValue??>
-    <div class="alert alert-warning">
-        <p><@spring.message errorValue/></p>
+    <div class="row">
+        <div class="alert alert-warning col-sm-7 col-md-5">
+            <p><@spring.message errorValue/></p>
+        </div>
+        <br>
     </div>
-    <br>
 </#if>
     <div class="row">
         <div class="col-sm-7 col-md-5">
@@ -31,7 +33,7 @@
                         <th><@spring.message "coffeelist.name"/></th>
                         <th><@spring.message code="coffeelist.price"/></th>
                         <th><@spring.message code="coffeelist.quantity"/></th>
-                    <th></th>
+                        <th></th>
                     </tr>
                 <#list typeToSelectedWraper.items as type>
                     <tr>

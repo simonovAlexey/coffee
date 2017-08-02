@@ -2,7 +2,6 @@ package com.simonov.coffee.service;
 
 import com.simonov.coffee.model.CoffeeOrder;
 import com.simonov.coffee.model.CoffeeType;
-import com.simonov.coffee.to.CoffeeOrderItemTo;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -23,12 +22,6 @@ public class CoffeeOrderTOServiceTest extends AbstractCoffeeOrderServiceTest {
         System.out.println("done");
     }
 
-    @Test
-    public void getCoffeeTypeToByOrderIdTest() {
-        List<CoffeeOrderItemTo> coffeeOrderItemTos = coffeeOrderService.getByOrderId(3);
-        System.out.println("done");
-
-    }
 
     @Test
     public void getOneCoffeeOrderTest() {

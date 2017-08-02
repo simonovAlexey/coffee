@@ -2,7 +2,6 @@ package com.simonov.coffee.utill;
 
 import com.simonov.coffee.model.CostConfiguration;
 import com.simonov.coffee.repository.CostConfigurationRepository;
-import com.simonov.coffee.to.CoffeeOrderItemTo;
 import com.simonov.coffee.utill.exception.NotFoundException;
 import lombok.Data;
 import lombok.NonNull;
@@ -79,24 +78,10 @@ public class BusinessRulesImpl implements BusinessRules {
 
 
     @Override
-    public double calculateSubTotalCost(@NonNull CoffeeOrderItemTo item) {
-        return calculateSubTotalCost(item.getQuantity(), item.getPrice());
-
-    }
-
-    @Override
     public double calculateSubTotalCost(@NonNull Integer quantity, double price) {
         return (quantity - (quantity / eachNCupFree)) * price;
     }
 
-    @Override
-    public double calculateOrderSubTotal(@NonNull List<CoffeeOrderItemTo> items) {
-        double cost = 0;
-        for (CoffeeOrderItemTo orderItem : items) {
-            cost += calculateSubTotalCost(orderItem);
-        }
-        return cost;
-    }
 
     @Override
     public double calculateDelivery(double subtotal) {
