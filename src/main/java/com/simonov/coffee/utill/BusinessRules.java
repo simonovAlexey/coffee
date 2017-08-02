@@ -10,4 +10,5 @@ public interface BusinessRules {
     double calculateSubTotalCost(Integer quantity, double price);
     double calculateOrderSubTotal(List<CoffeeOrderItemTo> items);
 	double calculateDelivery(double subtotal);
+	int getNFreeCup();
 }

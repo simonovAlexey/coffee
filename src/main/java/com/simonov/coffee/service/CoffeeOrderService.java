@@ -5,6 +5,8 @@ import com.simonov.coffee.model.CoffeeOrderItem;
 import com.simonov.coffee.model.CoffeeType;
 import com.simonov.coffee.to.CoffeeOrderItemTo;
 import com.simonov.coffee.to.OrderTO;
+import com.simonov.coffee.to.TypeToSelected;
+import com.simonov.coffee.to.TypeToSelectedWraper;
 
 import java.util.List;
 import java.util.Map;
@@ -12,6 +14,8 @@ import java.util.Map;
 public interface CoffeeOrderService {
 
     List<CoffeeType> getAllEnabledCoffeType();
+
+    TypeToSelectedWraper getWrapper();
 
     List<CoffeeOrderItem> save(OrderTO orderTO);
 
@@ -21,8 +25,10 @@ public interface CoffeeOrderService {
 
     List<CoffeeOrderItemTo> getByCoffeeTypeIdAndQuantity(Map<Integer,Integer> ctm);
 
-    OrderTO prepareOrder(List<CoffeeOrderItemTo> items);
+//    OrderTO prepareOrder(List<CoffeeOrderItemTo> items);
 
-    Integer getNFreeCup();
+    OrderTO prepareOrder(List<TypeToSelected> items);
+
+    int getNFreeCup();
 
 }

@@ -8,6 +8,8 @@ import com.simonov.coffee.repository.CoffeeOrderRepository;
 import com.simonov.coffee.repository.CoffeeTypeRepository;
 import com.simonov.coffee.to.CoffeeOrderItemTo;
 import com.simonov.coffee.to.OrderTO;
+import com.simonov.coffee.to.TypeToSelected;
+import com.simonov.coffee.to.TypeToSelectedWraper;
 import com.simonov.coffee.utill.BusinessRules;
 import com.simonov.coffee.utill.ValidationUtil;
 import org.slf4j.Logger;
@@ -49,16 +51,35 @@ public class CoffeeOrderServiceImpl implements CoffeeOrderService {
     }
 
     @Override
+    public TypeToSelectedWraper getWrapper() {
+        List<TypeToSelected> converted = getAllEnabledCoffeType().stream().map(i -> new TypeToSelected(i.getId(), i.getTypeName(), i.getPrice())).collect(Collectors.toList());
+        return new TypeToSelectedWraper(converted);
+    }
+
+    /*  @Override
+      @Transactional
+      public List<CoffeeOrderItem> save(OrderTO orderTO) {
+          CoffeeOrder coffeeOrder = new CoffeeOrder(LocalDateTime.now(), orderTO.getName(), orderTO.getDeliveryAdress(), orderTO.getTotal());
+          CoffeeOrder savedOrder = orderRepository.save(coffeeOrder);
+          List<CoffeeOrderItem> result = new ArrayList<>();
+          for (CoffeeOrderItemTo item : orderTO.getItems()) {
+              CoffeeOrderItem coffeeOrderItem = new CoffeeOrderItem(savedOrder, item.getQuantity());
+              result.add(orderItemRepository.save(coffeeOrderItem, item.getId()));
+          }
+          LOG.debug("Order saved: ", result);
+          return result;
+      }*/
+    @Override
     @Transactional
     public List<CoffeeOrderItem> save(OrderTO orderTO) {
         CoffeeOrder coffeeOrder = new CoffeeOrder(LocalDateTime.now(), orderTO.getName(), orderTO.getDeliveryAdress(), orderTO.getTotal());
         CoffeeOrder savedOrder = orderRepository.save(coffeeOrder);
         List<CoffeeOrderItem> result = new ArrayList<>();
-        for (CoffeeOrderItemTo item : orderTO.getItems()) {
+        for (TypeToSelected item : orderTO.getItems()) {
             CoffeeOrderItem coffeeOrderItem = new CoffeeOrderItem(savedOrder, item.getQuantity());
             result.add(orderItemRepository.save(coffeeOrderItem, item.getId()));
         }
-        LOG.debug("Order saved: ",result);
+        LOG.debug("Order saved: ", result);
         return result;
     }
 
@@ -91,15 +112,30 @@ public class CoffeeOrderServiceImpl implements CoffeeOrderService {
         return Collections.unmodifiableList(resultList);
     }
 
-    @Override
+    /*@Override
     public OrderTO prepareOrder(List<CoffeeOrderItemTo> items) {
         double subtotal = businessRules.calculateOrderSubTotal(items);
+        double delivery = businessRules.calculateDelivery(subtotal);
+        return new OrderTO(items, subtotal, delivery, subtotal + delivery);
+    }*/
+
+    @Override
+    public OrderTO prepareOrder(List<TypeToSelected> items) {
+        double subtotal = 0;
+        int eachNcupFree = businessRules.getNFreeCup();
+        for (TypeToSelected item : items) {
+            double itemSTotal = businessRules.calculateSubTotalCost(item.getQuantity(), item.getPrice());
+            subtotal += itemSTotal;
+            item.setTotal(itemSTotal);
+            if (item.getQuantity() < eachNcupFree) item.setSelected(false);
+
+        }
         double delivery = businessRules.calculateDelivery(subtotal);
         return new OrderTO(items, subtotal, delivery, subtotal + delivery);
     }
 
     @Override
-    public Integer getNFreeCup() {
-        return null;
+    public int getNFreeCup() {
+        return businessRules.getNFreeCup();
     }
 }

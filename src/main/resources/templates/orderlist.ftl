@@ -53,19 +53,19 @@
                         <td><input type="hidden" name="items[${type_index}].typeName" value="${type.typeName}">${type.typeName}</td>
                         <td><input type="hidden" name="items[${type_index}].price" value="${type.price}">${type.price}</td>
                         <td><input type="hidden" name="items[${type_index}].quantity" value="${type.quantity}">${type.quantity}</td>
-                        <td><input type="hidden" name="items[${type_index}].total" value="${type.total}">${type.total} TGR</td>
+                        <td <#if type.selected>class="text-danger"</#if>><input type="hidden" name="items[${type_index}].total" value="${type.total}">${type.total} TGR</td>
                     </tr>
                 </#list>
                     <tr>
-                        <td style="text-align: right;" colspan="3"><@spring.message "orderTO.subtotal"/></td>
+                        <td style="text-align: right;" colspan="4"><@spring.message "orderTO.subtotal"/></td>
                         <td><input type="hidden" name="subtotal" value="${orderTO.subtotal}">${orderTO.subtotal} TGR</td>
                     </tr>
                     <tr>
-                        <td style="text-align: right;" colspan="3"><@spring.message "orderTO.delivery"/></td>
+                        <td style="text-align: right;" colspan="4"><@spring.message "orderTO.delivery"/></td>
                         <td><input type="hidden" name="delivery" value="${orderTO.delivery}">${orderTO.delivery} TGR</td>
                     </tr>
                     <tr>
-                        <td style="text-align: right;" colspan="3"><b><@spring.message "coffeelist.total"/></b></td>
+                        <td style="text-align: right;" colspan="4"><b><@spring.message "coffeelist.total"/></b></td>
                         <td><input type="hidden" name="total" value="${orderTO.total}">${orderTO.total} TGR</td>
                     </tr>
                 </table>

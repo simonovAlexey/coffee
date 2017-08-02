@@ -15,46 +15,46 @@
     </h3>
 
 <#if errorValue??>
-    <div class="alert alert-danger">
+    <div class="alert alert-warning">
         <p><@spring.message errorValue/></p>
     </div>
     <br>
 </#if>
     <div class="row">
-        <div class="col-sm-6 col-md-4">
+        <div class="col-sm-7 col-md-5">
 
             <form action="orderlist" method="POST" id="catalogform">
 
-                <table class="table table-hover table-bordered table-striped table-condensed">
+                <table class="table table-hover">
                     <tr>
                         <th></th>
                         <th><@spring.message "coffeelist.name"/></th>
                         <th><@spring.message code="coffeelist.price"/></th>
                         <th><@spring.message code="coffeelist.quantity"/></th>
+                    <th></th>
                     </tr>
-                <#list coffeetypelist as type>
+                <#list typeToSelectedWraper.items as type>
                     <tr>
                         <td>
-                            <input type="hidden" name="id" value="${type.id}">
-                            <input type="checkbox" name="selected" value="${type.id}">
+                            <@macros.textInputHidden "typeToSelectedWraper.items[${type_index}].id"/>
+                            <input type="checkbox" name="items[${type_index}].selected" value="true">
                         </td>
-
-                        <td><input type="hidden" name="typeName" value="${type.typeName}">${type.typeName}</td>
-                        <td><input type="hidden" name="price" value="${type.price}">${type.price} TGR</td>
-                        <td><input type="text" name="quantity" maxlength="4" size="4" <#--type="number" min="0" step="1" size="3" -->/>
-                        <#--<#if (spring.status.errorMessages)?? ><@spring.showErrors "<br>" "control-group error"/></#if>-->
-                        </td>
+                        <td><@macros.textInputHidden "typeToSelectedWraper.items[${type_index}].typeName"/>${type.typeName}</td>
+                        <td><@macros.textInputHidden "typeToSelectedWraper.items[${type_index}].price"/>${type.price}</td>
+                        <td><@macros.textInput "typeToSelectedWraper.items[${type_index}].quantity" "size='3' maxlength='3' class='form-control'" "number"/></td>
+                        <td><@macros.showErrors "<br>" "text-danger"/></td>
                     </tr>
                 </#list>
 
                     <tr>
-                        <td colspan="4"><input type="submit"
+                        <td colspan="5"><input type="submit"
                                                value="<@spring.message "orderTO.confirmBTN"/>"</td>
                     </tr>
 
-                <tr>
-                    <td colspan=4>* - <@spring.message "coffeelist.each" /> ${nCupFree} <@spring.message "coffeelist.freeCup"/></td>
-                </tr>
+                    <tr>
+                        <td colspan=5>*
+                            - <@spring.message "coffeelist.each" /> ${nCupFree} <@spring.message "coffeelist.freeCup"/></td>
+                    </tr>
 
                 </table>
             </form>
@@ -64,7 +64,7 @@
 
 <#if orderConfirmed??>
 <script type="application/javascript">
-    $(document).ready(function(){
+    $(document).ready(function () {
         $("#confirmModal").modal({
             backdrop: 'static',
             keyboard: false
@@ -72,14 +72,8 @@
     });
 </script>
 
-<div class="container">
-    <!-- Trigger test the modal with a button -->
-    <#--<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#confirmModal">Open Small Modal</button>-->
-
-</div>
-
 <!-- Modal -->
-<div class="modal fade" id="confirmModal" >
+<div class="modal fade" id="confirmModal">
     <div class="modal-dialog modal-sm">
         <div class="modal-content">
             <div class="modal-header">

@@ -102,5 +102,10 @@ public class BusinessRulesImpl implements BusinessRules {
     public double calculateDelivery(double subtotal) {
         return subtotal > freeDelivery ? 0 : deliveryCost;
     }
+
+    @Override
+    public int getNFreeCup() {
+        return eachNCupFree;
+    }
 }
 

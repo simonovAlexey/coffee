@@ -19,7 +19,7 @@ public class OrderTO extends BaseTo{
 
     @Valid
     @NotNull
-    private List<CoffeeOrderItemTo> items;
+    private List<TypeToSelected> items;
 
     @NotNull
     private double subtotal;
@@ -38,7 +38,7 @@ public class OrderTO extends BaseTo{
     @Length(min = 10, max=200)
     private String deliveryAdress;
 
-    public OrderTO(List<CoffeeOrderItemTo> items, double subtotal, double delivery, double total) {
+    public OrderTO(List<TypeToSelected> items, double subtotal, double delivery, double total) {
         this.items = items;
         this.subtotal = subtotal;
         this.delivery = delivery;
