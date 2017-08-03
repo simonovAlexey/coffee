@@ -19,10 +19,9 @@ import java.util.List;
 public class BusinessRulesImpl implements BusinessRules {
     private static final Logger LOG = LoggerFactory.getLogger(BusinessRulesImpl.class);
 
-    private int eachNCupFree; // each N-cup of same coffee-sort is free
+    private int eachNCupFree;
     private int deliveryCost;
-    private int freeDelivery; // if order's cost greater than this value, then  free  delivery
-
+    private int freeDelivery;
     private CostConfigurationRepository costConfigurationRepository;
 
     @Autowired

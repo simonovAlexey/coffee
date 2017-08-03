@@ -39,11 +39,11 @@
                     <tr>
                         <td>
                             <@macros.textInputHidden "typeToSelectedWraper.items[${type_index}].id"/>
-                            <input type="checkbox" name="items[${type_index}].selected" value="true">
+                            <input type="checkbox" name="items[${type_index}].selected" value="true" onclick="toggleInput(this, ${type_index})">
                         </td>
                         <td><@macros.textInputHidden "typeToSelectedWraper.items[${type_index}].typeName"/>${type.typeName}</td>
                         <td><@macros.textInputHidden "typeToSelectedWraper.items[${type_index}].price"/>${type.price}</td>
-                        <td><@macros.textInput "typeToSelectedWraper.items[${type_index}].quantity" "size='3' maxlength='3' class='form-control'" "number"/></td>
+                        <td><@macros.textInput "typeToSelectedWraper.items[${type_index}].quantity" "size='3' maxlength='3' class='form-control' disabled=''" "number"/></td>
                         <td><@macros.showErrors "<br>" "text-danger"/></td>
                     </tr>
                 </#list>

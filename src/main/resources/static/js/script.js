@@ -1,6 +1,8 @@
-var modal1 = document.getElementById('confirmModal');
-
-// on page load
-$(function () {
-    modal1.style.display = 'block';
-});
+function toggleInput(checkbox, itemId) {
+    var disabled = !checkbox.checked;
+    var inputField = $("#items" + itemId + "\\.quantity");
+    inputField.prop('disabled', disabled);
+    if (disabled) {
+        inputField.val("");
+    }
+}

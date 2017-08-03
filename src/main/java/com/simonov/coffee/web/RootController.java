@@ -10,6 +10,7 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,6 +28,7 @@ public class RootController {
     private static final String template = "Hello, %s!";
     private final AtomicLong counter = new AtomicLong();
     private CoffeeOrderService service;
+    private ObjectError error;
 
 
     @Autowired
@@ -54,12 +56,13 @@ public class RootController {
         return list;
     }
 
-    @RequestMapping("/orderlist")  //not only PostMapping. To change locale we need GET
+    @RequestMapping("/orderlist")
+    //not only PostMapping. To change locale we need GET
     public String confirmOrder(@Valid TypeToSelectedWraper typeToSelectedWraper, BindingResult result, SessionStatus status, ModelMap map) {
         if (result.hasErrors()) {
             map.addAttribute("nCupFree", service.getNFreeCup());
-
-            return "coffeelist";}
+            return "coffeelist";
+        }
         if (typeToSelectedWraper.getItems() == null || typeToSelectedWraper.getItems().isEmpty())
             return "redirect:coffeelist";// try to change locale on orderTO
         List<TypeToSelected> checkedList = new ArrayList<>();
@@ -90,7 +93,6 @@ public class RootController {
     }
 
     private String getCoffeListPage(ModelMap model, Boolean error, Boolean confirmOrder) {
-//        model.addAttribute("coffeetypelist", service.getAllEnabledCoffeType());
         model.addAttribute("typeToSelectedWraper", service.getWrapper());
         model.addAttribute("nCupFree", service.getNFreeCup());
         if (confirmOrder) model.addAttribute("orderConfirmed", true);
