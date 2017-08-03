@@ -15,7 +15,6 @@
  */
 package com.simonov.coffee.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -35,7 +34,6 @@ public class BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected Integer id;
 
-    @JsonIgnore
     public boolean isNew() {
         return this.id == null;
     }

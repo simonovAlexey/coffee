@@ -10,7 +10,7 @@ import com.simonov.coffee.to.OrderTO;
 import com.simonov.coffee.to.TypeToSelected;
 import com.simonov.coffee.to.TypeToSelectedWraper;
 import com.simonov.coffee.utill.BusinessRules;
-import com.simonov.coffee.utill.ValidationUtil;
+import com.simonov.coffee.utill.exception.NotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,8 +43,7 @@ public class CoffeeOrderServiceImpl implements CoffeeOrderService {
         this.orderItemRepository = orderItemRepository;
     }
 
-    @Override
-    public List<CoffeeType> getAllEnabledCoffeType() {
+    private List<CoffeeType> getAllEnabledCoffeType() {
         return Collections.unmodifiableList(typeRepository.getAllEnabled());
     }
 
@@ -70,7 +69,9 @@ public class CoffeeOrderServiceImpl implements CoffeeOrderService {
 
     @Override
     public CoffeeOrder getOne(int id) {
-        return ValidationUtil.checkNotFoundWithId(orderRepository.findById(id), id);
+        CoffeeOrder coffeeOrder = orderRepository.findById(id);
+        if (coffeeOrder==null) throw new NotFoundException("Not found entity with id=" + id);
+        return coffeeOrder;
     }
 
 

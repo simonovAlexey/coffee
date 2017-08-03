@@ -13,7 +13,7 @@ import java.util.List;
 
 @Profile("spring-data-jpa")
 @Repository
-public class DataJpaCostConfigurationRepositoryImpl implements CostConfigurationRepository {
+public class DataJpaCostConfigRepositoryImpl implements CostConfigurationRepository {
 
     @PersistenceContext
     private EntityManager em;

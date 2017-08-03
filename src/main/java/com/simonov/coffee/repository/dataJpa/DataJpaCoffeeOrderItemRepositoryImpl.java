@@ -13,18 +13,18 @@ import java.util.List;
 @Repository
 public class DataJpaCoffeeOrderItemRepositoryImpl implements CoffeeOrderItemRepository {
 
-    private CrudCoffeeOrderItemRepository coffeeOrderItemRepo;
+    private CrudCoffeeOrderItemRepository orderItemRepo;
     private DataJpaCoffeeTypeRepository coffeeTypeRepo;
 
     @Autowired
-    public DataJpaCoffeeOrderItemRepositoryImpl(CrudCoffeeOrderItemRepository coffeeOrderItemRepo, DataJpaCoffeeTypeRepository coffeeTypeRepo) {
-        this.coffeeOrderItemRepo = coffeeOrderItemRepo;
+    public DataJpaCoffeeOrderItemRepositoryImpl(CrudCoffeeOrderItemRepository orderItemRepo, DataJpaCoffeeTypeRepository coffeeTypeRepo) {
+        this.orderItemRepo = orderItemRepo;
         this.coffeeTypeRepo = coffeeTypeRepo;
     }
 
     @Override
     public List<CoffeeOrderItem> findAllByCoffeeOrderId(int id) {
-        return coffeeOrderItemRepo.findAllByCoffeeOrderId(id);
+        return orderItemRepo.findAllByCoffeeOrderId(id);
     }
 
 
@@ -35,12 +35,12 @@ public class DataJpaCoffeeOrderItemRepositoryImpl implements CoffeeOrderItemRepo
             return null;
         }
         coffeeOrderItem.setCoffeeType(coffeeTypeRepo.getOne(typeId));
-        return coffeeOrderItemRepo.save(coffeeOrderItem);
+        return orderItemRepo.save(coffeeOrderItem);
     }
 
     @Override
     public CoffeeOrderItem get(int id, int typeId) {
-        CoffeeOrderItem orderItem = coffeeOrderItemRepo.findOne(id);
+        CoffeeOrderItem orderItem = orderItemRepo.findOne(id);
         return orderItem != null && orderItem.getCoffeeType().getId() == typeId ? orderItem : null;
     }
 }

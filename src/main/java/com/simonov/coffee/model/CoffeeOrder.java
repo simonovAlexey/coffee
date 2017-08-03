@@ -4,6 +4,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.data.jpa.convert.threeten.Jsr310JpaConverters;
 
@@ -30,10 +31,12 @@ public class CoffeeOrder extends BaseEntity{
 
     @Column(name = "name")
     @NotBlank
+    @Length(min = 3, max=200)
     private String name;
 
     @Column(name = "delivery_address")
     @NotBlank
+    @Length(min = 3, max=200)
     private String deliveryAdress;
 
     @Column(name = "cost")
