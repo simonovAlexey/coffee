@@ -1,4 +1,4 @@
-package com.simonov.coffee.utill;
+package com.simonov.coffee.util;
 
 public interface BusinessRules {
 

@@ -1,8 +1,8 @@
-package com.simonov.coffee.utill;
+package com.simonov.coffee.util;
 
 import com.simonov.coffee.model.CostConfiguration;
 import com.simonov.coffee.repository.CostConfigurationRepository;
-import com.simonov.coffee.utill.exception.NotFoundException;
+import com.simonov.coffee.util.exception.NotFoundException;
 import lombok.Data;
 import lombok.NonNull;
 import org.slf4j.Logger;

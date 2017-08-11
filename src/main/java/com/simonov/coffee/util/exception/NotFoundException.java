@@ -1,4 +1,4 @@
-package com.simonov.coffee.utill.exception;
+package com.simonov.coffee.util.exception;
 
 
 public class NotFoundException extends RuntimeException {

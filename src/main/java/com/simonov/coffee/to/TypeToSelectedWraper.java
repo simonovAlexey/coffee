@@ -18,7 +18,6 @@ public class TypeToSelectedWraper {
     @Valid
     @NotNull
     private List<TypeToSelected> items;
-    private String wrapper = "wrapper";
 
     public TypeToSelectedWraper(List<TypeToSelected> items) {
         this.items = items;

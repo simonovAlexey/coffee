@@ -4,7 +4,6 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
         	http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-    <bean id="businessRules" class="com.simonov.coffee.utill.BusinessRulesImpl" autowire="constructor">
-    </bean>
+    <bean id="businessRules" class="com.simonov.coffee.util.BusinessRulesImpl" autowire="constructor"/>
 
 </beans>

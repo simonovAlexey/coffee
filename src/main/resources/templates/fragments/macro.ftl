@@ -4,7 +4,6 @@
 <div class="${error} col-sm-8">
     <#assign id="${spring.status.expression?replace('[','')?replace(']','')}">
     <input type="${type}" id="${id}" name="${spring.status.expression}" value="${spring.stringStatusValue}" ${attributes}>
-<#--<#if error?has_content><span class="help-inline control-label">${spring.status.errorMessages?first}</span></#if>-->
     <#nested>
 </div>
 </#macro>

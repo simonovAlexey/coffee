@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.support.SessionStatus;
@@ -16,15 +15,11 @@ import org.springframework.web.bind.support.SessionStatus;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicLong;
 
 @Controller
 public class RootController {
 
-    private static final String template = "Hello, %s!";
-    private final AtomicLong counter = new AtomicLong();
     private CoffeeOrderService service;
-    private ObjectError error;
 
 
     @Autowired
@@ -49,9 +44,10 @@ public class RootController {
             return "coffeelist";
         }
         if (typeToSelectedWraper.getItems() == null || typeToSelectedWraper.getItems().isEmpty())
-            return "redirect:coffeelist";// try to change locale on orderTO
+            return "redirect:coffeelist";                               // try to change locale on orderTO
         List<TypeToSelected> checkedList = new ArrayList<>();
-        for (TypeToSelected item : typeToSelectedWraper.getItems()) {
+
+        for (TypeToSelected item : typeToSelectedWraper.getItems()) {  //double check validation
             if (item.isSelected()) {
                 if (item.getQuantity() != null && item.getQuantity() > 0) {
                     checkedList.add(item);
