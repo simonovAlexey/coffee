@@ -49,7 +49,10 @@
                     </tr>
                 <#list orderTO.items as type>
                     <tr>
-                        <td><input type="hidden" name="items[${type_index}].id" value="${type.id}"></td>
+                        <td><input type="hidden" name="items[${type_index}].id" value="${type.id}">
+                        <input type="hidden" name="items[${type_index}].selected" value="${type.selected?then('true', 'false')}">
+
+                        </td>
                         <td><input type="hidden" name="items[${type_index}].typeName" value="${type.typeName}">${type.typeName}</td>
                         <td><input type="hidden" name="items[${type_index}].price" value="${type.price}">${type.price}</td>
                         <td><input type="hidden" name="items[${type_index}].quantity" value="${type.quantity}">${type.quantity}</td>

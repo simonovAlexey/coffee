@@ -43,7 +43,7 @@
                         </td>
                         <td><@macros.textInputHidden "typeToSelectedWraper.items[${type_index}].typeName"/>${type.typeName}</td>
                         <td><@macros.textInputHidden "typeToSelectedWraper.items[${type_index}].price"/>${type.price}</td>
-                        <td><@macros.textInput "typeToSelectedWraper.items[${type_index}].quantity" "size='3' maxlength='3' class='form-control' disabled=''" "number"/></td>
+                        <td><@macros.textInput "typeToSelectedWraper.items[${type_index}].quantity" "size='2' maxlength='3' class='form-control' disabled=''" "number"/></td>
                         <td><@macros.showErrors "<br>" "text-danger"/></td>
                     </tr>
                 </#list>
