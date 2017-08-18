@@ -5,7 +5,6 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import org.hibernate.validator.constraints.Length;
-import org.hibernate.validator.constraints.NotBlank;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
@@ -30,11 +29,11 @@ public class OrderTO extends BaseTo{
     @NotNull
     private double total;
 
-    @NotBlank
+    @NotNull
     @Length(min = 3, max=100)
     private String name;
 
-    @NotBlank
+    @NotNull
     @Length(min = 10, max=200)
     private String deliveryAdress;
 

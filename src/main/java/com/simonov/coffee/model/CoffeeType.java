@@ -4,13 +4,13 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-import org.hibernate.validator.constraints.NotBlank;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "coffeetype")
@@ -21,7 +21,8 @@ import javax.validation.constraints.NotNull;
 public class CoffeeType extends BaseEntity {
 
     @Column(name = "type_name")
-    @NotBlank
+    @NotNull
+    @Size(min = 1)
     private String typeName;
 
     @Column(name = "price")

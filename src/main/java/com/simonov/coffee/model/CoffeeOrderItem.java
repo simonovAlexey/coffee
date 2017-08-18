@@ -23,7 +23,7 @@ public class CoffeeOrderItem extends BaseEntity {
     private CoffeeType coffeeType;
 
     @ManyToOne(cascade = CascadeType.REMOVE, optional = false)
-    @JoinColumn(name = "order_id")
+    @JoinColumn(name = "order_id",nullable = false)
 //    @OnDelete(action = OnDeleteAction.CASCADE)
     private CoffeeOrder coffeeOrder;
 

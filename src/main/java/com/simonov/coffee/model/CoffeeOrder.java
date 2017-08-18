@@ -5,16 +5,13 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import org.hibernate.validator.constraints.Length;
-import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.data.jpa.convert.threeten.Jsr310JpaConverters;
 
-import javax.persistence.Column;
-import javax.persistence.Convert;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "coffeeorder")
@@ -30,12 +27,12 @@ public class CoffeeOrder extends BaseEntity{
     private LocalDateTime orderDate;
 
     @Column(name = "name")
-    @NotBlank
+    @NotNull
     @Length(min = 3, max=200)
     private String name;
 
     @Column(name = "delivery_address")
-    @NotBlank
+    @NotNull
     @Length(min = 3, max=200)
     private String deliveryAdress;
 
@@ -43,6 +40,10 @@ public class CoffeeOrder extends BaseEntity{
     @NotNull
     @Digits(fraction = 2, integer = 5)
     private Double cost;
+
+    @OneToMany(mappedBy = "coffeeOrder", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<CoffeeOrderItem> orderItems;
+
 
     public CoffeeOrder(LocalDateTime orderDate, String name, String deliveryAdress, Double cost) {
         this.orderDate = orderDate;

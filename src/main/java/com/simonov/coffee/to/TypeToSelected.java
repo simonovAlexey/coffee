@@ -5,7 +5,6 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import org.hibernate.validator.constraints.Length;
-import org.hibernate.validator.constraints.NotBlank;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
@@ -16,7 +15,7 @@ import javax.validation.constraints.NotNull;
 @ToString(callSuper = true)
 public class TypeToSelected extends BaseTo{
 
-    @NotBlank
+    @NotNull
     @Length(min = 3, max=200)
     private  String typeName;
     @Min(1)
