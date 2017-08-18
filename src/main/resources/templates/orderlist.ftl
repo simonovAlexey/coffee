@@ -9,7 +9,9 @@
         <h1><@spring.message "coffeelist.title"/></h1>
     </div>
     <br>
-
+<#if Session.orderTO??>
+    <#assign orderTO = Session.orderTO>
+</#if>
     <form action="order" method="POST" id="delivery">
 
         <div class="row">
@@ -47,11 +49,11 @@
                         <th><@spring.message code="coffeelist.quantity"/></th>
                         <th><@spring.message code="coffeelist.total"/></th>
                     </tr>
+
                 <#list orderTO.items as type>
                     <tr>
                         <td><input type="hidden" name="items[${type_index}].id" value="${type.id}">
                         <input type="hidden" name="items[${type_index}].selected" value="${type.selected?then('true', 'false')}">
-
                         </td>
                         <td><input type="hidden" name="items[${type_index}].typeName" value="${type.typeName}">${type.typeName}</td>
                         <td><input type="hidden" name="items[${type_index}].price" value="${type.price}">${type.price}</td>

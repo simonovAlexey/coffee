@@ -25,6 +25,9 @@
     <div class="row">
         <div class="col-sm-7 col-md-5">
 
+        <#if Session.typeToSelectedWraper??>
+            <#assign typeToSelectedWraper = Session.typeToSelectedWraper>
+        </#if>
             <form action="orderlist" method="POST" id="catalogform">
 
                 <table class="table table-hover">

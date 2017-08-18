@@ -82,11 +82,6 @@ public class RootController {
             status.setComplete();
             return getCoffeListPage(map, false, true);
         }
-
-        if (orderTO.getItems()==null) {     //when error in validation and change lang
-            OrderTO attribute = (OrderTO) session.getAttribute(ATTR_ORDER);
-            map.addAttribute(ATTR_ORDER, attribute);
-        }
         return "orderlist";
     }
 
